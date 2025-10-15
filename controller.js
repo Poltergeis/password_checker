@@ -91,8 +91,10 @@ function is_in_any_sample(password, percemptage) {
   }
   const near_samples = [];
   for (const sample of signed_samples) {
-    if ((sample.ocurrences / password.length) >= percemptage) {
-      sample.parecido = `${(sample.ocurrences / password.length) * 100}%`;
+    const max_length = Math.max(password.length, sample.password.length);
+    const near_per = sample.ocurrences / max_length;
+    if (near_per >= percemptage) {
+      sample.parecido = `${(near_per * 100).toFixed(2)}%`;
       near_samples.push(sample);
     }
   }

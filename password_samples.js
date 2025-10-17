@@ -1,17 +1,18 @@
 import path from "path";
 import fs from "fs";
 import csv from "csv-parser";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const filepath = path.join(__dirname, "samples", "1millionPasswords.csv");
 
 /**
  * @type {Array<{rank: string, password: string}>}
  */
 const password_samples = [];
 
-const filepath = path.join(
-  import.meta.dirname,
-  "samples",
-  "1millionPasswords.csv"
-);
 fs.createReadStream(filepath)
   .pipe(csv())
   .on("data", (data) => password_samples.push(data));
